@@ -1,3 +1,36 @@
+# TerminalRMI ignored files #
 /TerminalRMI/nbproject/private/
+/TerminalRMI/build/
+/TerminalRMI/nbbuild/
+/TerminalRMI/dist/
+/TerminalRMI/nbdist/
+/TerminalRMI/nbactions.xml
+/TerminalRMI/nb-configuration.xml
+
+# CaixaRMI ignored files #
+
 /CaixaRMI/nbproject/private/
+/CaixaRMI/build/
+/CaixaRMI/nbbuild/
+/CaixaRMI/dist/
+/CaixaRMI/nbdist/
+/CaixaRMI/nbactions.xml
+/CaixaRMI/nb-configuration.xml
+
+# ServidorRMI ignored files #
+
 /ServidorRMI/nbproject/private/
+/ServidorRMI/build/
+/ServidorRMI/nbbuild/
+/ServidorRMI/dist/
+/ServidorRMI/nbdist/
+/ServidorRMI/nbactions.xml
+/ServidorRMI/nb-configuration.xml
+
+# Class Files #
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
