@@ -38,7 +38,7 @@ public class FormMenu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Pedidos"));
-        jPanel1.setLayout(new java.awt.GridLayout());
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
         jTablePedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -73,6 +73,11 @@ public class FormMenu extends javax.swing.JFrame {
         jlValor.setText("R$ 0,00");
 
         jbCardapio.setText("Cardapio");
+        jbCardapio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCardapioActionPerformed(evt);
+            }
+        });
 
         jbFinalizar.setText("Finalizar");
 
@@ -114,6 +119,11 @@ public class FormMenu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbCardapioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCardapioActionPerformed
+        FormCardapio.createFormCardapio();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbCardapioActionPerformed
 
     /**
      * @param args the command line arguments

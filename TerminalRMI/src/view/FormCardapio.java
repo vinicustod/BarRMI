@@ -5,17 +5,32 @@
  */
 package view;
 
+import controller.*;
+
 /**
  *
  * @author viniciuscustodio
  */
 public class FormCardapio extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FormCardapio
-     */
+    public static FormCardapio cardapio = null;
+    public ProdutoController produtoController = null;
+
+    public static void createFormCardapio() {
+        if (cardapio == null) {
+            cardapio = new FormCardapio();
+        }
+        cardapio.setVisible(true);
+    }
+
     public FormCardapio() {
         initComponents();
+        this.produtoController = new ProdutoController();
+        fillTableWithProducts();
+    }
+
+    private void fillTableWithProducts() {
+        this.produtoController.getProducts();
     }
 
     /**
