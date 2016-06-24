@@ -5,8 +5,10 @@
  */
 package view;
 
+import VO.Pedido;
 import VO.Produto;
 import controller.*;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,8 +20,12 @@ public class FormCardapio extends javax.swing.JFrame {
 
     public static FormCardapio cardapio = null;
     public ProdutoController produtoController = null;
-    List<Produto> produtos = null;
+    private Produto produtoSelecionado = null;
+    private Pedido pedidoSelecionado = null;
+    private List<Pedido> produtosPedido = new ArrayList();
+    private List<Produto> produtos = null;
     
+
     public static void createFormCardapio() {
         if (cardapio == null) {
             cardapio = new FormCardapio();
@@ -30,25 +36,30 @@ public class FormCardapio extends javax.swing.JFrame {
     public FormCardapio() {
         initComponents();
         this.produtoController = new ProdutoController();
-        fillTableWithProducts();
+        fillTableProdutos();
     }
 
-    private void fillTableWithProducts() {
+    private void fillTableProdutos() {
         produtos = this.produtoController.getProducts();
-        System.out.println("produtos");
-        System.out.println(produtos);
         DefaultTableModel model = (DefaultTableModel) this.jTableCardapio.getModel();
         model.setRowCount(0);
-                
-        
+
         produtos.stream().forEach((produto) -> {
             model.addRow(new Object[]{
                 produto.getDescricao(), produto.getPreco()
             });
         });
-
     }
 
+    private void fillTablePedidos(){
+        DefaultTableModel model = (DefaultTableModel) this.jTablePedidos.getModel();
+        model.setRowCount(0);
+        produtosPedido.stream().forEach((pedido) -> {
+            model.addRow(new Object[]{
+                pedido.getProduto().getDescricao(), pedido.getProduto().getPreco(), pedido.getQuantidade()
+            });
+        });
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -69,6 +80,7 @@ public class FormCardapio extends javax.swing.JFrame {
         jbFinalizarPedido = new javax.swing.JButton();
         jtQuantidade = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -94,6 +106,11 @@ public class FormCardapio extends javax.swing.JFrame {
             }
         });
         jTableCardapio.getTableHeader().setReorderingAllowed(false);
+        jTableCardapio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableCardapioMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableCardapio);
         if (jTableCardapio.getColumnModel().getColumnCount() > 0) {
             jTableCardapio.getColumnModel().getColumn(0).setResizable(false);
@@ -112,7 +129,7 @@ public class FormCardapio extends javax.swing.JFrame {
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Pedido"));
-        jPanel2.setLayout(new java.awt.GridLayout());
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
         jTablePedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -133,6 +150,11 @@ public class FormCardapio extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTablePedidos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTablePedidosMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTablePedidos);
         if (jTablePedidos.getColumnModel().getColumnCount() > 0) {
             jTablePedidos.getColumnModel().getColumn(0).setResizable(false);
@@ -142,14 +164,14 @@ public class FormCardapio extends javax.swing.JFrame {
 
         jPanel2.add(jScrollPane2);
 
-        jtAdicionar.setText(">>");
+        jtAdicionar.setText("+");
         jtAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtAdicionarActionPerformed(evt);
             }
         });
 
-        jtRemover.setText("<<");
+        jtRemover.setText("-");
         jtRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtRemoverActionPerformed(evt);
@@ -160,8 +182,20 @@ public class FormCardapio extends javax.swing.JFrame {
 
         jtQuantidade.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtQuantidade.setText("1");
+        jtQuantidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtQuantidadeActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Quantidade");
+
+        jButton1.setText("Remover");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -177,15 +211,18 @@ public class FormCardapio extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jtRemover, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
-                                            .addComponent(jtAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
                                         .addComponent(jtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(45, 45, 45))))
+                                        .addGap(45, 45, 45))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addComponent(jButton1))
+                                            .addComponent(jtRemover, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jtAdicionar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel1)
@@ -207,7 +244,9 @@ public class FormCardapio extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jtAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtRemover))
+                        .addComponent(jtRemover)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbFinalizarPedido)
@@ -220,12 +259,69 @@ public class FormCardapio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jtAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtAdicionarActionPerformed
+        try {
+            if (produtoSelecionado != null) {
+                System.out.println(produtoSelecionado.getDescricao());
+                for (Pedido pedido : produtosPedido) {
+                    if (pedido.getProduto().getDescricao().equals(produtoSelecionado.getDescricao())) {
+                        if (jtQuantidade.getText().equals("")) {
+                            pedido.setQuantidade(pedido.getQuantidade() + 1);
+                        } else {
+                            pedido.setQuantidade(pedido.getQuantidade() + Integer.parseInt(jtQuantidade.getText()));
+                        }
+                        return;
+                    }
+                }
+                Pedido pedido = new Pedido();
+                pedido.setProduto(produtoSelecionado);
+                if (!jtQuantidade.getText().equals("")) {
+                    pedido.setQuantidade(pedido.getQuantidade() + 1);
+                } else {
+                    pedido.setQuantidade(pedido.getQuantidade() + Integer.parseInt(jtQuantidade.getText()));
+                }
+                produtosPedido.add(pedido);
+            }
+        } finally {
+            fillTablePedidos();
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtAdicionarActionPerformed
 
     private void jtRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtRemoverActionPerformed
+        
+        if(pedidoSelecionado != null){
+            int valor = pedidoSelecionado.getQuantidade()- Integer.parseInt(jtQuantidade.getText());
+            if( valor  <= 0 )
+                produtosPedido.remove(pedidoSelecionado);
+            else
+                pedidoSelecionado.setQuantidade(valor);
+        }
+        fillTablePedidos();
         // TODO add your handling code here:
     }//GEN-LAST:event_jtRemoverActionPerformed
+
+    private void jTableCardapioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCardapioMouseClicked
+        produtoSelecionado = produtos.get(jTableCardapio.getSelectedRow());
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableCardapioMouseClicked
+
+    private void jtQuantidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtQuantidadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtQuantidadeActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try{
+            produtosPedido.remove(pedidoSelecionado);
+        }finally{
+            fillTablePedidos();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTablePedidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePedidosMouseClicked
+        pedidoSelecionado = produtosPedido.get(jTablePedidos.getSelectedRow());
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTablePedidosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -263,6 +359,7 @@ public class FormCardapio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
