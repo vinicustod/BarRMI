@@ -24,10 +24,12 @@ public class ProdutoDB {
         String qString = "SELECT p from Produto p";
         TypedQuery<Produto> q = em.createQuery(qString, Produto.class);
         List<Produto> results = null;
-
+        System.out.println(qString);
         try {
             results = q.getResultList();
+            System.out.println(results);
         } catch (NoResultException ex) {
+            System.out.println("erro");
             return null;
         } finally {
             em.close();

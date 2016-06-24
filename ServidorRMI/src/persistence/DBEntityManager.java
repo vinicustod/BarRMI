@@ -18,7 +18,7 @@ import javax.persistence.Persistence;
 public class DBEntityManager {
 
     private static final EntityManagerFactory EMF
-            = Persistence.createEntityManagerFactory("MySQLUniversity");
+            = Persistence.createEntityManagerFactory("ServidorRMIPU");
 
     public static EntityManagerFactory getEntityFactory() {
         return EMF;

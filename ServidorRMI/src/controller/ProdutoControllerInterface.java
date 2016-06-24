@@ -17,4 +17,6 @@ import java.util.List;
  */
 public interface ProdutoControllerInterface extends Remote{
     public List<Produto> getProducts() throws RemoteException;
+    public void imprimirMensagem(String nickname, String mensagem) throws RemoteException;
+
 }

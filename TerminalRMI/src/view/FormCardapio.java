@@ -5,7 +5,10 @@
  */
 package view;
 
+import VO.Produto;
 import controller.*;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,7 +18,8 @@ public class FormCardapio extends javax.swing.JFrame {
 
     public static FormCardapio cardapio = null;
     public ProdutoController produtoController = null;
-
+    List<Produto> produtos = null;
+    
     public static void createFormCardapio() {
         if (cardapio == null) {
             cardapio = new FormCardapio();
@@ -30,7 +34,19 @@ public class FormCardapio extends javax.swing.JFrame {
     }
 
     private void fillTableWithProducts() {
-        this.produtoController.getProducts();
+        produtos = this.produtoController.getProducts();
+        System.out.println("produtos");
+        System.out.println(produtos);
+        DefaultTableModel model = (DefaultTableModel) this.jTableCardapio.getModel();
+        model.setRowCount(0);
+                
+        
+        produtos.stream().forEach((produto) -> {
+            model.addRow(new Object[]{
+                produto.getDescricao(), produto.getPreco()
+            });
+        });
+
     }
 
     /**

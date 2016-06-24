@@ -24,10 +24,8 @@ public class ProdutoController{
     public List<Produto> getProducts(){
         List produtos = null;
         try {
-            File arq = new File("");
-            System.out.println(arq.getAbsolutePath());
             ProdutoControllerInterface produto = (ProdutoControllerInterface) Naming.lookup("rmi://127.0.0.1:10000/produto");
-            System.out.println(produtos);
+            produtos = produto.getProducts();
         } catch (NotBoundException | MalformedURLException | RemoteException ex) {
             Logger.getLogger(ProdutoController.class.getName()).log(Level.SEVERE, null, ex);
             return null;
