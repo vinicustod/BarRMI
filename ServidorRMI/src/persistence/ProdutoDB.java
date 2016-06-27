@@ -18,8 +18,8 @@ import javax.persistence.TypedQuery;
  * @author viniciuscustodio
  */
 public class ProdutoDB {
-    
-    public List<Produto> getProducts(){
+
+    public List<Produto> getProducts() {
         EntityManager em = DBEntityManager.getEntityFactory().createEntityManager();
         String qString = "SELECT p from Produto p";
         TypedQuery<Produto> q = em.createQuery(qString, Produto.class);
@@ -35,6 +35,22 @@ public class ProdutoDB {
             em.close();
         }
         return results;
-        
+
+    }
+
+    public boolean registrarSaida(Produto produto) {
+        EntityManager em = DBEntityManager.getEntityFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        trans.begin();
+        try {
+            em.merge(produto);
+            trans.commit();
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        } finally {
+            em.close();
+        }
+        return true;
     }
 }

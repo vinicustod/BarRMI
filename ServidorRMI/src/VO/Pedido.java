@@ -11,7 +11,8 @@ import java.io.Serializable;
  *
  * @author viniciuscustodio
  */
-public class Pedido implements Serializable{
+public class Pedido implements Serializable {
+
     private Produto produto;
     private int quantidade;
 
@@ -42,17 +43,17 @@ public class Pedido implements Serializable{
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
-    
-    public Pedido clone(){
+
+    public Pedido clone() {
         Pedido pedido = new Pedido();
         Produto novoProduto = new Produto();
-        
+
         pedido.setQuantidade(this.getQuantidade());
         novoProduto.setDescricao(produto.getDescricao());
         novoProduto.setIdProduto(produto.getIdProduto());
         novoProduto.setPreco(produto.getPreco());
         novoProduto.setQuantidade(produto.getQuantidade());
-        
+
         pedido.setProduto(novoProduto);
         return pedido;
     }

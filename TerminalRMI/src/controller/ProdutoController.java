@@ -5,6 +5,7 @@
  */
 package controller;
 
+import VO.Pedido;
 import VO.Produto;
 import java.io.BufferedReader;
 import java.io.File;
@@ -31,5 +32,17 @@ public class ProdutoController{
             return null;
         }
         return produtos;
+    }
+
+    public boolean realizarPedido(List<Pedido> produtosPedido) {
+        List produtos = null;
+        try {
+            ProdutoControllerInterface produto = (ProdutoControllerInterface) Naming.lookup("rmi://127.0.0.1:10000/produto");
+            produto.realizarPedido(produtosPedido);
+        } catch (NotBoundException | MalformedURLException | RemoteException ex) {
+            Logger.getLogger(ProdutoController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        return true;
     }
 }

@@ -10,6 +10,7 @@ import VO.Produto;
 import controller.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -31,6 +32,9 @@ public class FormCardapio extends javax.swing.JFrame {
             cardapio = new FormCardapio();
         }
         cardapio.setVisible(true);
+        cardapio.produtosPedido = new ArrayList();
+        cardapio.fillTablePedidos();
+        cardapio.fillTableProdutos();
     }
 
     public FormCardapio() {
@@ -179,6 +183,11 @@ public class FormCardapio extends javax.swing.JFrame {
         });
 
         jbFinalizarPedido.setText("Realizar Pedido");
+        jbFinalizarPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbFinalizarPedidoActionPerformed(evt);
+            }
+        });
 
         jtQuantidade.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtQuantidade.setText("1");
@@ -261,7 +270,7 @@ public class FormCardapio extends javax.swing.JFrame {
     private void jtAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtAdicionarActionPerformed
         try {
             if (produtoSelecionado != null) {
-                System.out.println(produtoSelecionado.getDescricao());
+                //System.out.println(produtoSelecionado.getDescricao());
                 for (Pedido pedido : produtosPedido) {
                     if (pedido.getProduto().getDescricao().equals(produtoSelecionado.getDescricao())) {
                         if (jtQuantidade.getText().equals("")) {
@@ -322,6 +331,24 @@ public class FormCardapio extends javax.swing.JFrame {
         pedidoSelecionado = produtosPedido.get(jTablePedidos.getSelectedRow());
         // TODO add your handling code here:
     }//GEN-LAST:event_jTablePedidosMouseClicked
+
+    private void jbFinalizarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFinalizarPedidoActionPerformed
+        if(!produtosPedido.isEmpty()){
+            for(Pedido pedido : produtosPedido){
+                Produto produto = pedido.getProduto();
+                if(pedido.getQuantidade() > Integer.parseInt(produto.getQuantidade())){
+                    JOptionPane.showMessageDialog(null, "Não foi possível realizar o pedido, quantidade desejada em falta.");
+                    return;
+                }
+            }
+            if(produtoController.realizarPedido(produtosPedido)){
+                FormMenu.menu.pedidoRealizado(produtosPedido);
+                FormMenu.menu.setVisible(true);
+                this.dispose();
+            }
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbFinalizarPedidoActionPerformed
 
     /**
      * @param args the command line arguments
