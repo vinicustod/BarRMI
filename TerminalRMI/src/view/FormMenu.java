@@ -5,11 +5,68 @@
  */
 package view;
 
+import VO.Pedido;
+import VO.Produto;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author viniciuscustodio
  */
 public class FormMenu extends javax.swing.JFrame {
+
+    public static FormMenu menu;
+    private List<Pedido> pedidos = new ArrayList();
+
+    public void pedidoRealizado(List<Pedido> pedidoRealizado) {
+        List<Pedido> copy = new ArrayList();
+        for(Pedido p: pedidoRealizado){
+            copy.add(p.clone());
+        }
+        
+        List<Pedido> toRemove = new ArrayList();
+        
+        for (Pedido pedido : pedidos) {
+            for (Pedido realizado : pedidoRealizado) {
+                Produto jaPedido = pedido.getProduto();
+                Produto naEspera = realizado.getProduto();
+                if (jaPedido.getDescricao().equals(naEspera.getDescricao())) {
+                    pedido.setQuantidade(pedido.getQuantidade() + realizado.getQuantidade());
+                    toRemove.add(realizado);
+                }
+            }
+        }
+        
+        for(Pedido pedido: toRemove){
+            pedidoRealizado.remove(pedido);
+        }
+
+        for (Pedido realizado : pedidoRealizado) {
+            pedidos.add(realizado);
+        }
+
+        fillTablePedidos();
+    }
+
+    private void fillTablePedidos() {
+        DefaultTableModel model = (DefaultTableModel) jTablePedidos.getModel();
+        Double total = 0.0;
+        jTablePedidos.removeAll();
+        model.setRowCount(0);
+        
+        DecimalFormat dc = new DecimalFormat("0.00");
+
+        for (Pedido pedido : pedidos) {
+            Produto produto = pedido.getProduto();
+            total = total + (produto.getPreco() * pedido.getQuantidade());
+            model.addRow(new Object[]{produto.getDescricao(), produto.getPreco(), pedido.getQuantidade()});
+        }
+        this.jlValor.setText("" + dc.format(total));
+
+    }
 
     /**
      * Creates new form FormMenu
@@ -38,7 +95,7 @@ public class FormMenu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Pedidos"));
-        jPanel1.setLayout(new java.awt.GridLayout());
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
         jTablePedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -73,6 +130,11 @@ public class FormMenu extends javax.swing.JFrame {
         jlValor.setText("R$ 0,00");
 
         jbCardapio.setText("Cardapio");
+        jbCardapio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCardapioActionPerformed(evt);
+            }
+        });
 
         jbFinalizar.setText("Finalizar");
 
@@ -115,6 +177,11 @@ public class FormMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jbCardapioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCardapioActionPerformed
+        FormCardapio.createFormCardapio();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbCardapioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -124,6 +191,7 @@ public class FormMenu extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -143,11 +211,14 @@ public class FormMenu extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        FormMenu.menu = new FormMenu();
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormMenu().setVisible(true);
+                FormMenu.menu.setVisible(true);
             }
         });
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -159,4 +230,5 @@ public class FormMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jlValor;
     private javax.swing.JLabel jlValorParcial;
     // End of variables declaration//GEN-END:variables
+
 }
