@@ -62,16 +62,24 @@ public class FormCaixa extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel2.setText("Mesas abertas");
+        jLabel2.setText("Mesas");
 
         tableMesasAbertas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Mesa"
+                "Mesa", "Status"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         tableMesasAbertas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane1.setViewportView(tableMesasAbertas);
 
@@ -87,16 +95,16 @@ public class FormCaixa extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnVisualizarMesaAberta)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jLabel2))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGap(83, 83, 83)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(108, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(83, 83, 83)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnVisualizarMesaAberta)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,6 +148,11 @@ public class FormCaixa extends javax.swing.JFrame {
         jScrollPane3.setViewportView(tblControleDeCaixa);
 
         btnVizualizarEntradasESaidas.setText("Visualizar");
+        btnVizualizarEntradasESaidas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVizualizarEntradasESaidasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -336,6 +349,12 @@ public class FormCaixa extends javax.swing.JFrame {
         FormVisualizarMesa formVisualizarMesa = new FormVisualizarMesa();
         formVisualizarMesa.setVisible(true);
     }//GEN-LAST:event_btnVisualizarMesaAbertaActionPerformed
+
+    private void btnVizualizarEntradasESaidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVizualizarEntradasESaidasActionPerformed
+        // TODO add your handling code here:
+        FormVisualizarEntradasESaidas formVisualizarEntradasESaidas = new FormVisualizarEntradasESaidas();
+        formVisualizarEntradasESaidas.setVisible(true);
+    }//GEN-LAST:event_btnVizualizarEntradasESaidasActionPerformed
 
     /**
      * @param args the command line arguments

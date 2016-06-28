@@ -17,6 +17,11 @@ public class FormVisualizarMesa extends javax.swing.JFrame {
     public FormVisualizarMesa() {
         initComponents();
     }
+    
+    public FormVisualizarMesa(String mesa, String total) {
+        initComponents();
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -60,6 +65,11 @@ public class FormVisualizarMesa extends javax.swing.JFrame {
         jLabel4.setText("Total:");
 
         btnFecharContaMesa.setText("Fechar Conta");
+        btnFecharContaMesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharContaMesaActionPerformed(evt);
+            }
+        });
 
         lblMesa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -140,6 +150,12 @@ public class FormVisualizarMesa extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnFecharContaMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharContaMesaActionPerformed
+        // TODO add your handling code here:
+        FormFecharConta formFecharConta = new FormFecharConta(lblTotalGastoNaMesa.getText());
+        formFecharConta.setVisible(true);
+    }//GEN-LAST:event_btnFecharContaMesaActionPerformed
 
     /**
      * @param args the command line arguments

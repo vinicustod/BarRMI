@@ -59,6 +59,11 @@ public class FormVisualizarEntradasESaidas extends javax.swing.JFrame {
         lblEntradasESaidas.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         btnFecharVisualizacaoEntradasESaidas.setText("Fechar");
+        btnFecharVisualizacaoEntradasESaidas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharVisualizacaoEntradasESaidasActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Total:");
@@ -110,6 +115,10 @@ public class FormVisualizarEntradasESaidas extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnFecharVisualizacaoEntradasESaidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharVisualizacaoEntradasESaidasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnFecharVisualizacaoEntradasESaidasActionPerformed
 
     /**
      * @param args the command line arguments
