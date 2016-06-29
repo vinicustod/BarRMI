@@ -5,17 +5,31 @@
  */
 package view;
 
+import VO.Produto;
+import controller.ProdutoController;
+
 /**
  *
  * @author Angelita
  */
 public class FormEditarProduto extends javax.swing.JFrame {
-
+    Produto produto = null;
     /**
      * Creates new form FormEditarProduto
      */
     public FormEditarProduto() {
         initComponents();
+    }
+    public FormEditarProduto(Produto produto) {
+        this.produto = produto;
+        initComponents();
+    }
+    
+    public void fillFomr(){
+        txtDescricaoEdicaoProduto.setText(produto.getDescricao());
+        txtIDEdicaoProduto.setText(produto.getIdProduto().toString());
+        txtQuantidadeEdicaoProduto.setText(produto.getQuantidade());
+        txtPrecoEdicaoProduto.setText(Float.toString(produto.getPreco()));
     }
 
     /**
@@ -59,6 +73,11 @@ public class FormEditarProduto extends javax.swing.JFrame {
         jLabel5.setText("Preço:");
 
         btnSalvarEdicao.setText("Salvar");
+        btnSalvarEdicao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarEdicaoActionPerformed(evt);
+            }
+        });
 
         btnCancelarEdicaoProduto.setText("Cancelar");
 
@@ -152,6 +171,16 @@ public class FormEditarProduto extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSalvarEdicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarEdicaoActionPerformed
+        // TODO add your handling code here:
+        Produto produto = new Produto();
+        produto.setDescricao(txtDescricaoEdicaoProduto.getText());
+        produto.setIdProduto(Long.parseLong(txtIDEdicaoProduto.getText()));
+        produto.setPreco(Float.parseFloat(txtIDEdicaoProduto.getText()));
+        produto.setQuantidade(txtQuantidadeEdicaoProduto.getText());
+        ProdutoController pordCont = new ProdutoController();
+    }//GEN-LAST:event_btnSalvarEdicaoActionPerformed
 
     /**
      * @param args the command line arguments

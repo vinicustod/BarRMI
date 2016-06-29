@@ -61,6 +61,11 @@ public class FormInserir extends javax.swing.JFrame {
         jLabel4.setText("Preço:");
 
         btnSalvarProduto.setText("Salvar");
+        btnSalvarProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarProdutoActionPerformed(evt);
+            }
+        });
 
         btnCancelarNovoProduto.setText("Cancelar");
 
@@ -149,6 +154,10 @@ public class FormInserir extends javax.swing.JFrame {
     private void txtQuantidadeProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantidadeProdutoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtQuantidadeProdutoActionPerformed
+
+    private void btnSalvarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarProdutoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSalvarProdutoActionPerformed
 
     /**
      * @param args the command line arguments

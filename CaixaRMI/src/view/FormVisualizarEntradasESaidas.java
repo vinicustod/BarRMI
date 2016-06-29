@@ -5,16 +5,23 @@
  */
 package view;
 
+import VO.Pedido;
+
 /**
  *
  * @author Angelita
  */
 public class FormVisualizarEntradasESaidas extends javax.swing.JFrame {
-
+    Pedido pedido = null;
     /**
      * Creates new form FormVisualizarEntradasESaidas
      */
     public FormVisualizarEntradasESaidas() {
+        initComponents();
+    }
+    
+    public FormVisualizarEntradasESaidas(Pedido pedido) {
+        this.pedido = pedido;
         initComponents();
     }
 

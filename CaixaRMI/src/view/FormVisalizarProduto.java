@@ -5,15 +5,29 @@
  */
 package view;
 
+import VO.Produto;
+
 /**
  *
  * @author Angelita
  */
 public class FormVisalizarProduto extends javax.swing.JFrame {
-
+    Produto produto = null;
     /**
      * Creates new form FormVisalizarProduto
      */
+    public FormVisalizarProduto(Produto produto) {
+        this.produto = produto;
+        initComponents();
+    }
+    
+    public void fillForm(){
+        lblDescricaoProduto.setText(produto.getDescricao());
+        lblIDProduto.setText(produto.getIdProduto().toString());
+        lblQuantidadeProdutos.setText(produto.getQuantidade());
+        lblPrecoDeVenda.setText(Float.toString(produto.getPreco()));
+    }
+    
     public FormVisalizarProduto() {
         initComponents();
     }
@@ -57,6 +71,11 @@ public class FormVisalizarProduto extends javax.swing.JFrame {
         jLabel5.setText("Preço de compra (un):");
 
         btnFecharVisualizacaoProduto.setText("Fechar");
+        btnFecharVisualizacaoProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharVisualizacaoProdutoActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Preço de venda (un):");
 
@@ -151,6 +170,10 @@ public class FormVisalizarProduto extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnFecharVisualizacaoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharVisualizacaoProdutoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnFecharVisualizacaoProdutoActionPerformed
 
     /**
      * @param args the command line arguments

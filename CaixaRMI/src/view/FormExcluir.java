@@ -5,16 +5,23 @@
  */
 package view;
 
+import VO.Produto;
+import controller.ProdutoController;
+
 /**
  *
  * @author Angelita
  */
 public class FormExcluir extends javax.swing.JFrame {
-
+    Produto produto = null;
     /**
      * Creates new form FormExcluir
      */
     public FormExcluir() {
+        initComponents();
+    }
+    public FormExcluir(Produto produto) {
+        this.produto = produto;
         initComponents();
     }
 
@@ -43,6 +50,11 @@ public class FormExcluir extends javax.swing.JFrame {
         jLabel2.setText("Tem certeza que deseja excluir esse produto?");
 
         btnExcluirProduto.setText("Sim");
+        btnExcluirProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirProdutoActionPerformed(evt);
+            }
+        });
 
         btnCancelarExclusao.setText("Não");
 
@@ -93,6 +105,11 @@ public class FormExcluir extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnExcluirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirProdutoActionPerformed
+        // TODO add your handling code here:
+        ProdutoController prodCont = new ProdutoController();
+    }//GEN-LAST:event_btnExcluirProdutoActionPerformed
 
     /**
      * @param args the command line arguments
