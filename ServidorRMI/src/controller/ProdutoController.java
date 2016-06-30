@@ -63,4 +63,10 @@ public class ProdutoController extends UnicastRemoteObject implements ProdutoCon
         return true;
     }
 
+    @Override
+    public Produto getProduct(Long idProduto) throws RemoteException {
+        ProdutoDB persistence = new ProdutoDB();
+        return persistence.getProduct(idProduto);
+    }
+
 }

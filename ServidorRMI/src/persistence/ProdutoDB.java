@@ -18,6 +18,25 @@ import javax.persistence.TypedQuery;
  * @author viniciuscustodio
  */
 public class ProdutoDB {
+    
+    public Produto getProduct(Long idProduto){
+        EntityManager em = DBEntityManager.getEntityFactory().createEntityManager();
+        String qString = "SELECT p from Produto p where idProduto = " + idProduto;
+        TypedQuery<Produto> q = em.createQuery(qString, Produto.class);
+        Produto result = null;
+        System.out.println(qString);
+        try {
+            result = q.getSingleResult();
+            System.out.println(result);
+        } catch (NoResultException ex) {
+            System.out.println("erro");
+            return null;
+        } finally {
+            em.close();
+        }
+        return result;
+
+    }
 
     public List<Produto> getProducts() {
         EntityManager em = DBEntityManager.getEntityFactory().createEntityManager();
