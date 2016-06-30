@@ -23,11 +23,11 @@ import java.util.logging.Logger;
  */
 public class ProdutoController{
     public List<Produto> getProducts(){
-        List produtos = null;
+        List<Produto> produtos = null;
         try {
             ProdutoControllerInterface produto = (ProdutoControllerInterface) Naming.lookup("rmi://127.0.0.1:10000/produto");
             produtos = produto.getProducts();
-        } catch (NotBoundException | MalformedURLException | RemoteException ex) {
+        } catch (NotBoundException | MalformedURLException | RemoteException  ex) {
             Logger.getLogger(ProdutoController.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
