@@ -22,5 +22,6 @@ public interface ProdutoControllerInterface extends Remote {
     public void imprimirMensagem(String nickname, String mensagem) throws RemoteException;
 
     public boolean realizarPedido(List<Pedido> pedido) throws RemoteException;
+    public Produto getProduct(Long idProduto) throws RemoteException;
 
 }
