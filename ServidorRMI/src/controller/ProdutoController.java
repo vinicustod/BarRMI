@@ -69,4 +69,23 @@ public class ProdutoController extends UnicastRemoteObject implements ProdutoCon
         return persistence.getProduct(idProduto);
     }
 
+    @Override
+    public boolean cadastrarProduto(Produto produto, boolean cadastrar) throws RemoteException {
+        ProdutoDB p = new ProdutoDB();
+        try {
+            if (cadastrar) {
+                return p.registrarEntrada(produto);
+            }else{
+                return p.registrarSaida(produto);
+            }            
+        } catch (Exception e) {
+            return false;
+        }        
+    }
+
+    @Override
+    public boolean excluirProduto(Produto produto) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
