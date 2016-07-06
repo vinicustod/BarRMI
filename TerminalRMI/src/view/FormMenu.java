@@ -30,9 +30,14 @@ public class FormMenu extends javax.swing.JFrame {
         }
         menu.mesa = mesa;
         menu.setVisible(true);
+        
     }
     
-    private List<Pedido> pedidos = new ArrayList();
+    public List<Pedido> pedidos = new ArrayList();
+    
+    public void limparMesa() {
+        pedidos = new ArrayList();
+    }
 
     public void pedidoRealizado(List<Pedido> pedidoRealizado) {
         List<Pedido> copy = new ArrayList();
@@ -243,5 +248,7 @@ public class FormMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jlValor;
     private javax.swing.JLabel jlValorParcial;
     // End of variables declaration//GEN-END:variables
+
+   
 
 }

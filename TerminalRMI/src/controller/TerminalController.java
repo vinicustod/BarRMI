@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import view.FormMenu;
 
 /**
  *
@@ -29,7 +30,12 @@ public class TerminalController  extends UnicastRemoteObject implements Terminal
         super();
     }
 
-    public String buscarProdutos() throws RemoteException {
-        return "";
+    public List<Pedido> buscarProdutos() throws RemoteException {
+        return FormMenu.menu.pedidos;
+    }
+
+    @Override
+    public void finalizarMesa() throws RemoteException {
+        FormMenu.menu.limparMesa();
     }
 }

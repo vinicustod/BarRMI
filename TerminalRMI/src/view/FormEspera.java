@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  * @author viniciuscustodio
  */
 public class FormEspera extends javax.swing.JFrame {
-    private Mesa mesa = new Mesa();
+    private Mesa mesa = null;
     private MesaController mesaController;
     /**
      * Creates new form FormEspera
@@ -23,11 +23,13 @@ public class FormEspera extends javax.swing.JFrame {
     public FormEspera() {
         initComponents();
         mesaController = new MesaController();
-        String nome = mesaController.registrarMesa();
+        int porta = Integer.parseInt(JOptionPane.showInputDialog(null, "Porta para o Terminal"));
+        String nome = mesaController.registrarMesa(porta);
         if (!nome.equals("erro")) {
             Servidor servidor = new Servidor(JOptionPane.showInputDialog(null, "IP Servidor", "127.0.0.1"),
-                    Integer.parseInt(JOptionPane.showInputDialog(null, "Porta Servidor", "10002")));
+                    porta);
             servidor.instatiateServicos(nome);
+            mesa = new Mesa();
             mesa.setMesa(Integer.parseInt(nome));
         }else{
             System.exit(0);
@@ -89,9 +91,9 @@ public class FormEspera extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(mesaController.registrarEntrada(mesa.getMesa(), jtNomeCliente.getText())){
-            mesa.setNomeCliente(jtNomeCliente.getText());
-            FormMenu.createMenu(mesa);
+        if(mesaController.registrarEntrada(this.mesa.getMesa(), jtNomeCliente.getText())){
+            this.mesa.setNomeCliente(jtNomeCliente.getText());
+            FormMenu.createMenu(this.mesa);
         }else{
             JOptionPane.showMessageDialog(null, "Erro ao registrar entrada do cliente.", "Erro", JOptionPane.ERROR_MESSAGE);
         }

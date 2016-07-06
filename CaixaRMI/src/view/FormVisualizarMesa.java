@@ -5,11 +5,21 @@
  */
 package view;
 
+import VO.Mesa;
+import VO.Pedido;
+import controller.TerminalController;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Angelita
  */
 public class FormVisualizarMesa extends javax.swing.JFrame {
+
+    private Mesa mesa;
+    private TerminalController terminalController = new TerminalController();
+    private List<Pedido> pedidos;
 
     /**
      * Creates new form FormVisualizarMesa
@@ -17,11 +27,34 @@ public class FormVisualizarMesa extends javax.swing.JFrame {
     public FormVisualizarMesa() {
         initComponents();
     }
-    
-    public FormVisualizarMesa(String mesa, String total) {
+
+    FormVisualizarMesa(Mesa mesa) {
         initComponents();
+        this.mesa = mesa;
+        fillTableProdutos();
     }
 
+    private void calcularTotal() {
+        Double total = 0.0;
+        for(Pedido pedido: pedidos){
+            total = total + pedido.getProduto().getPreco() * pedido.getQuantidade();
+        }
+        jlValor.setText("" + (total * 1.1));
+    }
+
+    private void fillTableProdutos() {
+        pedidos = this.terminalController.buscarProdutosTerminal(mesa);
+        calcularTotal();
+
+        DefaultTableModel model = (DefaultTableModel) this.tblConsumoMesa.getModel();
+        model.setRowCount(0);
+
+        pedidos.stream().forEach((pedido) -> {
+            model.addRow(new Object[]{
+                pedido.getProduto().getDescricao(), pedido.getQuantidade(), pedido.getProduto().getPreco()
+            });
+        });
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,8 +73,8 @@ public class FormVisualizarMesa extends javax.swing.JFrame {
         tblConsumoMesa = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         btnFecharContaMesa = new javax.swing.JButton();
-        lblTotalGastoNaMesa = new javax.swing.JLabel();
         lblMesa = new javax.swing.JLabel();
+        jlValor = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -73,6 +106,8 @@ public class FormVisualizarMesa extends javax.swing.JFrame {
 
         lblMesa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        jlValor.setText("Valor");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -90,7 +125,7 @@ public class FormVisualizarMesa extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblTotalGastoNaMesa)
+                        .addComponent(jlValor)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnFecharContaMesa)))
                 .addContainerGap())
@@ -110,7 +145,7 @@ public class FormVisualizarMesa extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(lblTotalGastoNaMesa))))
+                            .addComponent(jlValor))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -153,7 +188,7 @@ public class FormVisualizarMesa extends javax.swing.JFrame {
 
     private void btnFecharContaMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharContaMesaActionPerformed
         // TODO add your handling code here:
-        FormFecharConta formFecharConta = new FormFecharConta(lblTotalGastoNaMesa.getText());
+        FormFecharConta formFecharConta = new FormFecharConta(jlValor.getText(), mesa);
         formFecharConta.setVisible(true);
     }//GEN-LAST:event_btnFecharContaMesaActionPerformed
 
@@ -200,8 +235,9 @@ public class FormVisualizarMesa extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jlValor;
     private javax.swing.JLabel lblMesa;
-    private javax.swing.JLabel lblTotalGastoNaMesa;
     private javax.swing.JTable tblConsumoMesa;
     // End of variables declaration//GEN-END:variables
+
 }

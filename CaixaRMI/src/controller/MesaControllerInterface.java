@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface MesaControllerInterface extends Remote {
 
-    public String registrarMesa() throws RemoteException;
+    public String registrarMesa(String porta) throws RemoteException;
     public boolean registrarEntrada(int idMesa, String nomeCliente) throws RemoteException;
 
 }

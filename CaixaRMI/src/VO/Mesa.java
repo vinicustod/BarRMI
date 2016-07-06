@@ -13,6 +13,7 @@ public class Mesa {
     private int mesa;
     private String nomeCliente;
     private String disponibilidade;
+    private String portaMesa;
     /**
      * @return the mesa
      */
@@ -53,5 +54,19 @@ public class Mesa {
      */
     public void setDisponibilidade(String disponibilidade) {
         this.disponibilidade = disponibilidade;
+    }
+
+    /**
+     * @return the portaMesa
+     */
+    public String getPortaMesa() {
+        return portaMesa;
+    }
+
+    /**
+     * @param portaMesa the portaMesa to set
+     */
+    public void setPortaMesa(String portaMesa) {
+        this.portaMesa = portaMesa;
     }
 }

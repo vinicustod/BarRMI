@@ -5,6 +5,8 @@
  */
 package view;
 
+import VO.Mesa;
+import controller.TerminalController;
 import javax.swing.JLabel;
 
 /**
@@ -12,8 +14,10 @@ import javax.swing.JLabel;
  * @author Angelita
  */
 public class FormFecharConta extends javax.swing.JFrame {
-    
+
     public JLabel total;
+    private Mesa mesa;
+    private TerminalController terminalController = new TerminalController();
 
     /**
      * Creates new form FormFecharConta
@@ -21,7 +25,8 @@ public class FormFecharConta extends javax.swing.JFrame {
     public FormFecharConta() {
         initComponents();
     }
-    public FormFecharConta(String total) {
+
+    public FormFecharConta(String total, Mesa mesa) {
         initComponents();
         lblMesaTotalFecharConta.setText(total);
     }
@@ -64,6 +69,11 @@ public class FormFecharConta extends javax.swing.JFrame {
         lblTroco.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         btnPago.setText("Ok");
+        btnPago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPagoActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
 
@@ -170,6 +180,15 @@ public class FormFecharConta extends javax.swing.JFrame {
         float troco = recebido - total;
         lblTroco.setText(Float.toString(troco));
     }//GEN-LAST:event_btnCalcularActionPerformed
+
+    private void btnPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagoActionPerformed
+        float total = Float.parseFloat(lblMesaTotalFecharConta.getText());
+        float recebido = Float.parseFloat(txtDinheiroRecebido.getText());
+        terminalController.finalizarMesa(mesa);
+        mesa.setDisponibilidade("Livre");
+        FormCaixa.caixa.fillTableMesas();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPagoActionPerformed
 
     /**
      * @param args the command line arguments

@@ -43,7 +43,6 @@ public class FormCardapio extends javax.swing.JFrame {
     public FormCardapio() {
         initComponents();
         this.produtoController = new ProdutoController();
-        fillTableProdutos();
     }
 
     private void fillTableProdutos() {

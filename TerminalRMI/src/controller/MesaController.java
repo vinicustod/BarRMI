@@ -23,11 +23,11 @@ import java.util.logging.Logger;
  */
 public class MesaController {
 
-    public String registrarMesa() {
+    public String registrarMesa(int porta) {
         String nomeMesa = null;
         try {
             MesaControllerInterface produto = (MesaControllerInterface) Naming.lookup("rmi://127.0.0.1:10001/mesa");
-            nomeMesa = produto.registrarMesa();
+            nomeMesa = produto.registrarMesa(""+porta);
 
         } catch (NotBoundException | MalformedURLException | RemoteException ex) {
             Logger.getLogger(MesaController.class.getName()).log(Level.SEVERE, null, ex);

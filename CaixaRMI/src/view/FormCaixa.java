@@ -187,8 +187,8 @@ public class FormCaixa extends javax.swing.JFrame {
             new Object [][] {
                 {"Entradas da noite", null},
                 {"Saídas da noite", null},
-                {"Total geral de entradas", null},
-                {"Total geral de saídas", null},
+                {"Total de entradas (Produtos)", null},
+                {"Total de saídas (Produtos)", null},
                 {"Total de Produtos em Estoque", null},
                 {"Total de Lucros", null},
                 {"Total de despesas", null}
@@ -196,15 +196,7 @@ public class FormCaixa extends javax.swing.JFrame {
             new String [] {
                 "Descrição", "Total"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Double.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        ));
         jScrollPane3.setViewportView(tblControleDeCaixa);
 
         btnVizualizarEntradasESaidas.setText("Visualizar");
@@ -406,7 +398,7 @@ public class FormCaixa extends javax.swing.JFrame {
 
     private void btnVisualizarMesaAbertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarMesaAbertaActionPerformed
         // TODO add your handling code here:
-        FormVisualizarMesa formVisualizarMesa = new FormVisualizarMesa();
+        FormVisualizarMesa formVisualizarMesa = new FormVisualizarMesa(mesas.get(tableMesasAbertas.getSelectedRow()));
         formVisualizarMesa.setVisible(true);
     }//GEN-LAST:event_btnVisualizarMesaAbertaActionPerformed
 

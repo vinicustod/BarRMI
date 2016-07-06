@@ -33,7 +33,7 @@ public class MesaController extends UnicastRemoteObject implements MesaControlle
         super();
     }
 
-    public String registrarMesa() throws RemoteException {
+    public String registrarMesa(String porta) throws RemoteException {
         int newMesa = 0;
         int atIndex = 0;
         ArrayList<Mesa> mesas = FormCaixa.caixa.mesas;
