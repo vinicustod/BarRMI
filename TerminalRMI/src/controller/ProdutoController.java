@@ -22,11 +22,11 @@ import java.util.logging.Logger;
  * @author viniciuscustodio
  */
 public class ProdutoController{
-    public List<Produto> getProducts(){
+    public List<Produto> getProducts(String cliente){
         List produtos = null;
         try {
             ProdutoControllerInterface produto = (ProdutoControllerInterface) Naming.lookup("rmi://127.0.0.1:10000/produto");
-            produtos = produto.getProducts();
+            produtos = produto.getProducts(cliente);
         } catch (NotBoundException | MalformedURLException | RemoteException ex) {
             Logger.getLogger(ProdutoController.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -34,11 +34,11 @@ public class ProdutoController{
         return produtos;
     }
 
-    public boolean realizarPedido(List<Pedido> produtosPedido) {
+    public boolean realizarPedido(String cliente, List<Pedido> produtosPedido) {
         List produtos = null;
         try {
             ProdutoControllerInterface produto = (ProdutoControllerInterface) Naming.lookup("rmi://127.0.0.1:10000/produto");
-            produto.realizarPedido(produtosPedido);
+            produto.realizarPedido(cliente, produtosPedido);
         } catch (NotBoundException | MalformedURLException | RemoteException ex) {
             Logger.getLogger(ProdutoController.class.getName()).log(Level.SEVERE, null, ex);
             return false;

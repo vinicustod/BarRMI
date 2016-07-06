@@ -5,12 +5,23 @@
  */
 package VO;
 
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
 /**
  *
- * @author Angelita
+ * @author lucasfernandes
  */
-public class Produto {
-    
+@Entity
+public class Produto implements Serializable {
+
+    @Id
     private Long idProduto;
     private String quantidade;
     private float preco;
@@ -66,5 +77,6 @@ public class Produto {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
+    
+    
 }

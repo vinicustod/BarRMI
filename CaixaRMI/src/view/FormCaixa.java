@@ -5,11 +5,14 @@
  */
 package view;
 
+import VO.Mesa;
 import VO.Pedido;
 import VO.Produto;
 import controller.ProdutoController;
+import controller.Servidor;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -17,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
  * @author viniciuscustodio
  */
 public class FormCaixa extends javax.swing.JFrame {
-    
+
     public ProdutoController produtoController = null;
     private Produto produto = null;
     private Pedido pedido = null;
@@ -25,17 +28,29 @@ public class FormCaixa extends javax.swing.JFrame {
     private Pedido pedidoSelecionado = null;
     private List<Pedido> produtosPedido = new ArrayList();
     private List<Produto> produtos = null;
-    
-    
+    public static ArrayList<Mesa> mesas = new ArrayList();
+    public static FormCaixa caixa;
+
     /**
      * Creates new form FormCaixa
      */
+
+    public static void createCaixa() {
+        if (caixa == null) {
+            caixa = new FormCaixa();
+        }
+        caixa.setVisible(true);
+    }
+
     public FormCaixa() {
         initComponents();
         this.produtoController = new ProdutoController();
-        fillTableProdutos();
+
+        Servidor servidor = new Servidor(JOptionPane.showInputDialog(null, "IP Servidor", "127.0.0.1"),
+                Integer.parseInt(JOptionPane.showInputDialog(null, "Porta Servidor", "10001")));
+        servidor.instatiateServicos();
     }
-    
+
     private void fillTableProdutos() {
         produtos = this.produtoController.getProducts();
         DefaultTableModel model = (DefaultTableModel) this.tableProdutos.getModel();
@@ -43,15 +58,15 @@ public class FormCaixa extends javax.swing.JFrame {
 
         produtos.stream().forEach((produto) -> {
             model.addRow(new Object[]{
-                produto.getIdProduto(), produto.getDescricao(), produto.getPreco(), "5,00"
+                produto.getIdProduto(), produto.getDescricao(), produto.getQuantidade(), produto.getPreco(), produto.getPreco() * 0.8
             });
         });
     }
-    
-    private void fillTablePedidos(){
-        
+
+    private void fillTablePedidos() {
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -94,6 +109,17 @@ public class FormCaixa extends javax.swing.JFrame {
         jMenu2.setText("jMenu2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPane1StateChanged(evt);
+            }
+        });
+        jTabbedPane1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTabbedPane1FocusGained(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("Mesas");
@@ -259,15 +285,7 @@ public class FormCaixa extends javax.swing.JFrame {
             new String [] {
                 "Id", "Produto", "Qtd Disponível", "Preço venda (R$)", "Preço compra (R$)"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Long.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        ));
         tableProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableProdutosMouseClicked(evt);
@@ -364,34 +382,34 @@ public class FormCaixa extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void btnInserirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirProdutoActionPerformed
         // TODO add your handling code here:
         FormInserir formInserir = new FormInserir();
         formInserir.setVisible(true);
     }//GEN-LAST:event_btnInserirProdutoActionPerformed
-    
+
     private void btnVisualizarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarProdutoActionPerformed
         // TODO add your handling code here:
         if (produtoSelecionado != null) {
             FormVisalizarProduto formVisualizarProduto = new FormVisalizarProduto();
             formVisualizarProduto.setVisible(true);
         }
-        
+
     }//GEN-LAST:event_btnVisualizarProdutoActionPerformed
-    
+
     private void btnEditarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarProdutoActionPerformed
         // TODO add your handling code here:
         FormEditarProduto formEditarProduto = new FormEditarProduto();
         formEditarProduto.setVisible(true);
     }//GEN-LAST:event_btnEditarProdutoActionPerformed
-    
+
     private void btnVisualizarMesaAbertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarMesaAbertaActionPerformed
         // TODO add your handling code here:
         FormVisualizarMesa formVisualizarMesa = new FormVisualizarMesa();
         formVisualizarMesa.setVisible(true);
     }//GEN-LAST:event_btnVisualizarMesaAbertaActionPerformed
-    
+
     private void btnVizualizarEntradasESaidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVizualizarEntradasESaidasActionPerformed
         // TODO add your handling code here:
         FormVisualizarEntradasESaidas formVisualizarEntradasESaidas = new FormVisualizarEntradasESaidas();
@@ -402,7 +420,22 @@ public class FormCaixa extends javax.swing.JFrame {
         // TODO add your handling code here
         produtoSelecionado = produtos.get(tableProdutos.getSelectedRow());
     }//GEN-LAST:event_tableProdutosMouseClicked
-    
+
+    private void jTabbedPane1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTabbedPane1FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTabbedPane1FocusGained
+
+    private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
+        int selecionado = jTabbedPane1.getSelectedIndex();
+        System.out.println("selecionado: " + selecionado);
+        if (selecionado == 2) {
+            fillTableProdutos();
+        } else if (selecionado == 0) {
+            fillTableMesas();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTabbedPane1StateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -429,15 +462,15 @@ public class FormCaixa extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(FormCaixa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormCaixa().setVisible(true);
+                FormCaixa.createCaixa();
             }
         });
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditarProduto;
     private javax.swing.JButton btnExcluirProduto;
@@ -465,4 +498,13 @@ public class FormCaixa extends javax.swing.JFrame {
     private javax.swing.JTable tableProdutos;
     private javax.swing.JTable tblControleDeCaixa;
     // End of variables declaration//GEN-END:variables
+
+    public void fillTableMesas() {
+        DefaultTableModel model = (DefaultTableModel) tableMesasAbertas.getModel();
+        model.setRowCount(0);
+
+        mesas.stream().forEach(mesa -> {
+            model.addRow(new Object[]{mesa.getMesa(), mesa.getDisponibilidade()});
+        });
+    }
 }

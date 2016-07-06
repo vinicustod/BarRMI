@@ -5,6 +5,7 @@
  */
 package view;
 
+import VO.Mesa;
 import VO.Pedido;
 import VO.Produto;
 import controller.*;
@@ -25,13 +26,15 @@ public class FormCardapio extends javax.swing.JFrame {
     private Pedido pedidoSelecionado = null;
     private List<Pedido> produtosPedido = new ArrayList();
     private List<Produto> produtos = null;
+    private Mesa mesa;
     
 
-    public static void createFormCardapio() {
+    public static void createFormCardapio(Mesa mesaCliente) {
         if (cardapio == null) {
             cardapio = new FormCardapio();
         }
         cardapio.setVisible(true);
+        cardapio.mesa = mesaCliente;
         cardapio.produtosPedido = new ArrayList();
         cardapio.fillTablePedidos();
         cardapio.fillTableProdutos();
@@ -44,7 +47,7 @@ public class FormCardapio extends javax.swing.JFrame {
     }
 
     private void fillTableProdutos() {
-        produtos = this.produtoController.getProducts();
+        produtos = this.produtoController.getProducts(mesa.getNomeCliente());
         DefaultTableModel model = (DefaultTableModel) this.jTableCardapio.getModel();
         model.setRowCount(0);
 
@@ -341,7 +344,7 @@ public class FormCardapio extends javax.swing.JFrame {
                     return;
                 }
             }
-            if(produtoController.realizarPedido(produtosPedido)){
+            if(produtoController.realizarPedido(mesa.getNomeCliente(), produtosPedido)){
                 FormMenu.menu.pedidoRealizado(produtosPedido);
                 FormMenu.menu.setVisible(true);
                 this.dispose();

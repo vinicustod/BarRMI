@@ -26,7 +26,7 @@ public class ProdutoController{
         List<Produto> produtos = null;
         try {
             ProdutoControllerInterface produto = (ProdutoControllerInterface) Naming.lookup("rmi://127.0.0.1:10000/produto");
-            produtos = produto.getProducts();
+            produtos = produto.getProducts("Caixa");
         } catch (NotBoundException | MalformedURLException | RemoteException  ex) {
             Logger.getLogger(ProdutoController.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -38,7 +38,7 @@ public class ProdutoController{
         Produto produtos = null;
         try {
             ProdutoControllerInterface produto = (ProdutoControllerInterface) Naming.lookup("rmi://127.0.0.1:10000/produto");
-            produtos = produto.getProduct(idProduto);
+            produtos = produto.getProduct("Caixa",idProduto);
         } catch (NotBoundException | MalformedURLException | RemoteException ex) {
             Logger.getLogger(ProdutoController.class.getName()).log(Level.SEVERE, null, ex);
             return null;

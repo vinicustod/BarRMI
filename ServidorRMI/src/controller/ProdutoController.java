@@ -5,6 +5,7 @@
  */
 package controller;
 
+import VO.Movimentacao;
 import VO.Pedido;
 import VO.Produto;
 import java.rmi.RemoteException;
@@ -12,6 +13,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import javax.swing.JOptionPane;
 import persistence.ProdutoDB;
+import view.FormServidor;
 
 /**
  *
@@ -29,15 +31,18 @@ public class ProdutoController extends UnicastRemoteObject implements ProdutoCon
     }
 
     @Override
-    public List<Produto> getProducts() throws RemoteException {
-        System.out.println("chegou aqui");
+    public List<Produto> getProducts(String cliente) throws RemoteException {
+        if (!cliente.equals("self"))
+            FormServidor.servidor.novaMovimentacao(new Movimentacao("Busca Todos Produto", cliente ));
         ProdutoDB persistence = new ProdutoDB();
         return persistence.getProducts();
     }
 
     @Override
-    public boolean realizarPedido(List<Pedido> pedido) throws RemoteException{
-        List<Produto> produtos = this.getProducts();
+    public boolean realizarPedido(String cliente, List<Pedido> pedido) throws RemoteException{
+        List<Produto> produtos = this.getProducts("self");
+        FormServidor.servidor.novaMovimentacao(new Movimentacao("Pedido", cliente));
+        
         for (Produto produtoBase : produtos) {
             for (Pedido p : pedido) {
                 Produto produto = p.getProduto();
@@ -64,7 +69,8 @@ public class ProdutoController extends UnicastRemoteObject implements ProdutoCon
     }
 
     @Override
-    public Produto getProduct(Long idProduto) throws RemoteException {
+    public Produto getProduct(String cliente, Long idProduto) throws RemoteException {
+        FormServidor.servidor.novaMovimentacao(new Movimentacao("Busca Produto com id " + idProduto, cliente));
         ProdutoDB persistence = new ProdutoDB();
         return persistence.getProduct(idProduto);
     }

@@ -5,11 +5,15 @@
  */
 package view;
 
+import VO.Mesa;
 import VO.Pedido;
 import VO.Produto;
+import controller.MesaController;
+import controller.Servidor;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,16 +23,25 @@ import javax.swing.table.DefaultTableModel;
 public class FormMenu extends javax.swing.JFrame {
 
     public static FormMenu menu;
+    private Mesa mesa = null;
+    public static void createMenu(Mesa mesa) {
+        if(menu == null){
+            menu = new FormMenu();
+        }
+        menu.mesa = mesa;
+        menu.setVisible(true);
+    }
+    
     private List<Pedido> pedidos = new ArrayList();
 
     public void pedidoRealizado(List<Pedido> pedidoRealizado) {
         List<Pedido> copy = new ArrayList();
-        for(Pedido p: pedidoRealizado){
+        for (Pedido p : pedidoRealizado) {
             copy.add(p.clone());
         }
-        
+
         List<Pedido> toRemove = new ArrayList();
-        
+
         for (Pedido pedido : pedidos) {
             for (Pedido realizado : pedidoRealizado) {
                 Produto jaPedido = pedido.getProduto();
@@ -39,8 +52,8 @@ public class FormMenu extends javax.swing.JFrame {
                 }
             }
         }
-        
-        for(Pedido pedido: toRemove){
+
+        for (Pedido pedido : toRemove) {
             pedidoRealizado.remove(pedido);
         }
 
@@ -56,7 +69,7 @@ public class FormMenu extends javax.swing.JFrame {
         Double total = 0.0;
         jTablePedidos.removeAll();
         model.setRowCount(0);
-        
+
         DecimalFormat dc = new DecimalFormat("0.00");
 
         for (Pedido pedido : pedidos) {
@@ -178,7 +191,7 @@ public class FormMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbCardapioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCardapioActionPerformed
-        FormCardapio.createFormCardapio();
+        FormCardapio.createFormCardapio(mesa);
         // TODO add your handling code here:
     }//GEN-LAST:event_jbCardapioActionPerformed
 
