@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  */
 public class ProdutoController{
     public List<Produto> getProducts(){
-        List<Produto> produtos = null;
+        List produtos = null;
         try {
             ProdutoControllerInterface produto = (ProdutoControllerInterface) Naming.lookup("rmi://127.0.0.1:10000/produto");
             produtos = produto.getProducts("Caixa");

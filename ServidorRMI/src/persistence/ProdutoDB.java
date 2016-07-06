@@ -73,4 +73,36 @@ public class ProdutoDB {
         }
         return true;
     }
+    
+    public boolean registrarEntrada(Produto produto) {
+        EntityManager em = DBEntityManager.getEntityFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        trans.begin();
+        try {
+            em.persist(produto);
+            trans.commit();
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        } finally {
+            em.close();
+        }
+        return true;
+    }
+    
+    public boolean excluirProduto(Produto produto) {
+        EntityManager em = DBEntityManager.getEntityFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        trans.begin();
+        try {
+            em.remove(produto);
+            trans.commit();
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        } finally {
+            em.close();
+        }
+        return true;
+    }
 }

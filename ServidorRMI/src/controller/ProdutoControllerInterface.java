@@ -21,5 +21,9 @@ public interface ProdutoControllerInterface extends Remote{
     public void imprimirMensagem(String nickname, String mensagem) throws RemoteException;
     public boolean realizarPedido(String cliente, List<Pedido> pedido) throws RemoteException;
     public Produto getProduct(String cliente, Long idProduto) throws RemoteException;
+    //Esse método vai receber o produto e se esse produto será cadastrado -1 ou editado -0
+    //se for para cadastrar ele chama o método de inserção de novo item, se for edição, chama o de atualização
+    public boolean cadastrarProduto(String cliente, Produto produto, boolean cadastrar) throws RemoteException;
+    public boolean excluirProduto(String cliente, Produto produto) throws RemoteException;
 
 }
