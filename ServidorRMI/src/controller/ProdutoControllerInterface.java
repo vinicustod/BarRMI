@@ -17,13 +17,13 @@ import java.util.List;
  * @author viniciuscustodio
  */
 public interface ProdutoControllerInterface extends Remote{
-    public List<Produto> getProducts() throws RemoteException;
+    public List<Produto> getProducts(String cliente) throws RemoteException;
     public void imprimirMensagem(String nickname, String mensagem) throws RemoteException;
-    public boolean realizarPedido(List<Pedido> pedido) throws RemoteException;
-    public Produto getProduct(Long idProduto) throws RemoteException;
+    public boolean realizarPedido(String cliente, List<Pedido> pedido) throws RemoteException;
+    public Produto getProduct(String cliente, Long idProduto) throws RemoteException;
     //Esse método vai receber o produto e se esse produto será cadastrado -1 ou editado -0
     //se for para cadastrar ele chama o método de inserção de novo item, se for edição, chama o de atualização
-    public boolean cadastrarProduto(Produto produto, boolean cadastrar) throws RemoteException;
-    public boolean excluirProduto(Produto produto) throws RemoteException;
+    public boolean cadastrarProduto(String cliente, Produto produto, boolean cadastrar) throws RemoteException;
+    public boolean excluirProduto(String cliente, Produto produto) throws RemoteException;
 
 }
