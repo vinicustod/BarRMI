@@ -5,11 +5,13 @@
  */
 package VO;
 
+import java.io.Serializable;
+
 /**
  *
- * @author Angelita
+ * @author viniciuscustodio
  */
-public class Pedido {
+public class Pedido implements Serializable{
     private Produto produto;
     private int quantidade;
 
@@ -40,5 +42,18 @@ public class Pedido {
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
-
+    
+    public Pedido clone(){
+        Pedido pedido = new Pedido();
+        Produto novoProduto = new Produto();
+        
+        pedido.setQuantidade(this.getQuantidade());
+        novoProduto.setDescricao(produto.getDescricao());
+        novoProduto.setIdProduto(produto.getIdProduto());
+        novoProduto.setPreco(produto.getPreco());
+        novoProduto.setQuantidade(produto.getQuantidade());
+        
+        pedido.setProduto(novoProduto);
+        return pedido;
+    }
 }
