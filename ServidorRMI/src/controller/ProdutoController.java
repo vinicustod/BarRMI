@@ -35,6 +35,7 @@ public class ProdutoController extends UnicastRemoteObject implements ProdutoCon
         if (!cliente.equals("self"))
             FormServidor.servidor.novaMovimentacao(new Movimentacao("Busca Todos Produto", cliente ));
         ProdutoDB persistence = new ProdutoDB();
+        System.out.println("vai busca");
         return persistence.getProducts();
     }
 

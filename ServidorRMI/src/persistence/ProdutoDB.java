@@ -53,6 +53,7 @@ public class ProdutoDB {
         } finally {
             em.close();
         }
+        System.out.println(results);
         return results;
 
     }
